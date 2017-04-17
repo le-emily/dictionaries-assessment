@@ -29,7 +29,17 @@ def count_words(phrase):
         {'Porcupine': 1, 'do.': 1, 'porcupine': 1, 'see,': 1}
     """
 
-    return {}
+    my_dict = {}
+
+    words = phrase.split()
+
+    for word in words:
+        if word in my_dict:
+            my_dict[word] += 1 
+        else:
+            my_dict[word] = 1 
+
+    return my_dict
 
 
 def get_melon_price(melon_name):
@@ -54,10 +64,15 @@ def get_melon_price(melon_name):
         'No price found'
     """
 
-    return 0
+    melon_prices = {"Watermelon": 2.95,
+                "Cantaloupe": 2.50,
+                "Musk": 3.25,
+                "Christmas": 14.25}
+
+    return melon_prices.get(melon_name, "No price found")
 
 
-def word_length_sorted(words):
+def word_length_sorted(words): #number not sorting
     """Return list of word-lengths and words.
 
     Given a list of words, return a list of tuples, ordered by
@@ -75,8 +90,23 @@ def word_length_sorted(words):
         >>> word_length_sorted(["porcupine", "ok"])
         [(2, ['ok']), (9, ['porcupine'])]
     """
+    my_dict = {}
+    result_list = []
+    words.sort()
+    
+    for word in words:
+        if len(word) in my_dict:
+            my_dict[len(word)].append(word)
+        else:
+            my_dict[len(word)] = [word]
 
-    return []
+    for key, value in my_dict.items():
+        result_list.append((key, value))
+
+    result_list.sort(key=lambda tup: tup[0])
+
+    print result_list
+
 
 
 def translate_to_pirate_talk(phrase):
@@ -117,8 +147,32 @@ def translate_to_pirate_talk(phrase):
         >>> translate_to_pirate_talk("my student is not a man!")
         'me swabbie be not a man!'
     """
+    result_sentence = []
+    dictionary = {'sir': 'matey',
+    'hotel': 'fleabag inn',
+    'student': 'swabbie',
+    'man': 'matey',
+    'professor': 'foul blaggart',
+    'restaurant': 'galley',
+    'your': 'yer',
+    'excuse': 'arr',
+    'students': 'swabbies',
+    'are': 'be',
+    'restroom': 'head',
+    'my': 'me',
+    'is': 'be'}
 
-    return ""
+    phrase = phrase.split()
+
+    for word in phrase:
+        if word == " ":
+            result_sentence.append(word)
+        elif word in dictionary:
+            result_sentence.append(dictionary[word])
+        else:
+            result_sentence.append(word)
+
+    return " ".join(result_sentence)
 
 
 def kids_game(names):
@@ -156,8 +210,8 @@ def kids_game(names):
 
     Two more examples:
 
-        >>> kids_game(["apple", "berry", "cherry"])
-        ['apple']
+        >>> kids_game(["apple", "berry", "eggplant", "cherry"])
+        ['apple', 'eggplant']
 
         >>> kids_game(["noon", "naan", "nun"])
         ['noon', 'naan', 'nun']
@@ -166,8 +220,28 @@ def kids_game(names):
     a dictionary (with the super-fast lookup they provide) can help;
     good solutions here will definitely require a dictionary.
     """
+    result_list = []
+    # start with first index
+    name = names[0]
+    result_list.append(name)
+    del names[0]
+    
+    while True:
+        found = False
+        last_letter = name[-1]
+        for n in names:
+            if n[0] == last_letter:
+                # keep looping if a next word is found
+                found = True
+                name = n
+                result_list.append(name)
+                del names[names.index(name)]
+                break
+        # set found to false if next word cannot be found
+        if not found:
+            break
 
-    return []
+    return result_list
 
 #####################################################################
 # You can ignore everything below this.

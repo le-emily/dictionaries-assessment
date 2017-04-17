@@ -3,7 +3,7 @@
 **IMPORTANT:** These problems are meant to be solved using
 dictionaries and sets.
 """
-
+import pdb
 
 def without_duplicates(words):
     """Given a list of words, return list with duplicates removed.
@@ -32,7 +32,7 @@ def without_duplicates(words):
         [2, 33333, 111111]
     """
 
-    return []
+    return set(words)
 
 
 def find_unique_common_items(items1, items2):
@@ -62,7 +62,8 @@ def find_unique_common_items(items1, items2):
         [2]
     """
 
-    return []
+    return set(items1) & set(items2)
+
 
 def get_sum_zero_pairs(numbers):
     """Given list of numbers, return list of pairs summing to 0.
@@ -90,8 +91,14 @@ def get_sum_zero_pairs(numbers):
         >>> sort_pairs( get_sum_zero_pairs([1, 3, -1, 1, 1, 0]) )
         [[-1, 1], [0, 0]]
     """
+    list_of_sum_zero = []
 
-    return []
+    for num1 in numbers:
+        for num2 in numbers:
+            if num1 + num2 == 0:
+                list_of_sum_zero.append([num1, num2])
+
+    return list_of_sum_zero
 
 
 def top_chars(phrase):
@@ -118,8 +125,31 @@ def top_chars(phrase):
     Do not count spaces, but count all other characters.
 
     """
+    my_dict = {}
+    phrase = phrase.split()
+    top_char = []
 
-    return []
+    for word in phrase:
+        for letter in word:
+            if letter in my_dict:
+                my_dict[letter] += 1 
+            else:
+                my_dict[letter] = 1
+
+    key = list(my_dict.keys())
+    value = list(my_dict.values())
+    
+    # get the index from the max value
+    max_char = key[value.index(max(value))]
+
+    max_count = my_dict[max_char]
+
+    for key in my_dict:
+        if my_dict[key] >= max_count:
+            top_char.append(key)
+
+
+    return top_char
 
 #####################################################################
 # You can ignore everything below this.
